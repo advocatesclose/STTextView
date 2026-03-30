@@ -84,11 +84,12 @@ private struct TextViewRepresentable: NSViewRepresentable {
         textView.showsLineNumbers = options.contains(.showLineNumbers)
         textView.textSelection = NSRange()
 
+        let paragraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+        paragraphStyle.baseWritingDirection = .leftToRight
         if lineHeightMultiple != 1.0 {
-            let paragraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
             paragraphStyle.lineHeightMultiple = lineHeightMultiple
-            textView.defaultParagraphStyle = paragraphStyle
         }
+        textView.defaultParagraphStyle = paragraphStyle
 
         textView.isAutomaticSpellingCorrectionEnabled = !autocorrectionDisabled
         if options.contains(.disableSmartQuotes) {
