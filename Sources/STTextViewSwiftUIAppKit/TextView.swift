@@ -140,7 +140,9 @@ private struct TextViewRepresentable: NSViewRepresentable {
         context.coordinator.isUserEditing = false
 
         if textView.textSelection != selection, let selection {
+            context.coordinator.isUpdating = true
             textView.textSelection = selection
+            context.coordinator.isUpdating = false
         }
 
         if textView.isEditable != isEnabled {
@@ -222,10 +224,7 @@ private struct TextViewRepresentable: NSViewRepresentable {
                 return
             }
 
-            let newSelection = textView.selectedRange()
-            DispatchQueue.main.async { [weak self] in
-                self?.selection = newSelection
-            }
+            selection = textView.selectedRange()
         }
 
     }
